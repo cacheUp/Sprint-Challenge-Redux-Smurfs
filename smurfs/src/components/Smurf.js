@@ -1,30 +1,56 @@
 import React from "react";
 
+import { withStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+
+const styles = {
+  card: {
+    maxWidth: 345,
+    width: 200
+  },
+  media: {
+    height: 140
+  }
+};
+
 const Smurf = props => {
   const deleteSmurf = e => {
     props.deleteSmurf(props.smurf.id);
   };
-
+  const { classes } = props;
   return (
-    <div className="Smurf ">
-      <h2 className="card-header">{props.smurf.name}</h2>
-      <h3>age: {props.smurf.age}</h3>
-      <h3>height: {props.smurf.height} cm</h3>
-
-      <button
-        className="delete-button btn btn-secondary btn-lg"
-        onClick={deleteSmurf}
-      >
-        Delete
-      </button>
-    </div>
+    <Card className={classes.card}>
+      <CardActionArea>
+        <CardMedia
+          className={classes.media}
+          image={require("./smurf.jpg")}
+          title="smurf"
+          height="50"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="h2">
+            {props.smurf.name}
+          </Typography>
+          <Typography component="p">age: {props.smurf.age}</Typography>
+          <Typography component="p">height: {props.smurf.height}</Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button size="small" color="primary" onClick={deleteSmurf}>
+          delete
+        </Button>
+        <Button size="small" color="primary" onClick={deleteSmurf}>
+          update
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 
-Smurf.defaultProps = {
-  name: "",
-  height: "",
-  age: ""
-};
-
-export default Smurf;
+export default withStyles(styles)(Smurf);
